@@ -8,7 +8,7 @@ from base_faker import BaseFaker
 from MySqlLexer import MySqlLexer
 from MySqlParser import MySqlParser
 from database_listener import DatabaseListener
-from provider import Parser
+from parser import Parser
 
 
 class MySqlFaker(BaseFaker):
@@ -40,13 +40,9 @@ class MySqlFaker(BaseFaker):
         self.fill_parent_columns(database, num)
         for tb in database.tables:
             for col in tb.columns:
-                if col.parent_column:
-                    col.values = col.parent_column.values
-                else:
-                    for i in range(num):
-                        ps = Parser()
-                        val = ps.get_provider(col.faker_type)
-                        col.values.append(val)
+                for i in range(num):
+                    val = Parser().get_provider(col.pink_def)
+                    col.values.append(val)
         return database
 
     def fill_parent_columns(self, database, num):

@@ -7,7 +7,7 @@ from MySqlParser import MySqlParser
 from mysql.MySqlParserListener import MySqlParserListener
 
 
-pattern = '\(([a-zA-Z_]+)\s*,?\s*([a-zA-Z_]+\.[a-zA-Z_]+)?\s*,?\s*(\w+)?\)'
+pattern = '\((.+)\)'
 
 
 class DatabaseListener(MySqlParserListener):
@@ -55,21 +55,10 @@ class DatabaseListener(MySqlParserListener):
     def resolve_comment_column_constraint_context(self, ctx: MySqlParser.CommentColumnConstraintContext, column):
         comment = ctx.getChildren()[1].getText()
         m = re.search(pattern, comment)
-        faker_type = m.group(1)
-        if not faker_type:
-            pass  # todo exception
-        else:
-            column.faker_type = faker_type
-        parent_column = m.group(2)
-        if parent_column:
-            parent_columns = self.database.parent_columns
-            if parent_column in parent_columns:
-                column.parent_column = parent_columns[parent_column]
-            else:
-                pc = ParentColumn()
-                pc.name = parent_column
-                pc.faker_type = column.faker_type
-                column.parent_column = pc
-                parent_columns[parent_column] = pc
+        pink_def = m.group(1)
+        if pink_def:
+            column.pink_def = pink_def
+
+
 
 

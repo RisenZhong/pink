@@ -20,7 +20,7 @@ class Column:
         self.name = None
         self.type = None
         self.not_null = False
-        self.faker_type = None
+        self.pink_def = None
         self.parent_column = None
         self.values = []
 
@@ -29,4 +29,4 @@ class ParentColumn:
     def __init__(self):
         self.name = None
         self.values = []
-        self.faker_type = None
+        self.pink_def = None
