@@ -95,7 +95,7 @@ def get_connection():
 """
 
 
-def init_cases(swagger, host_url, cases_path, tags):
+def init_cases(swagger, host_url, cases_path, tags=None):
     cases_dir = _make_cases_dir(cases_path)
     _init_config_file(cases_dir, host_url)
     _init_env_file(cases_dir)
